@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option go_package = "reviewbot/internal/app/reviewbot/pb";
+
+// Template for messages sent to customer.
+// Used when creating, updating, and listing message templates.
+message MessageTemplate {
+    // Required field with a unique name of the template.
+    string name = 1;
+    // Required field containing the template itself.
+    string content = 2;
+    // Optional list of strings that will trigger a message to a customer using this template.
+    repeated string triggers = 3;
+}
+
+// Message object used when deleting a message template.
+message DeleteTemplateRequest {
+    // Required field with the name of the template to delete.
+    string name = 1;
+}
+
+// Empty object used when requesting a list of message templates.
+message ListTemplatesRequest {}
+
+// Message object used when listing message templates.
+message TemplateResponse {
+    repeated MessageTemplate templates = 1;
+}
+
+// Template management service.
+service Templates {
+    rpc Create(MessageTemplate) returns (TemplateResponse) {}
+    rpc Update(MessageTemplate) returns (TemplateResponse) {}
+    rpc Delete(DeleteTemplateRequest) returns (TemplateResponse) {}
+    rpc List(ListTemplatesRequest) returns (TemplateResponse) {}
+}
+
+// Message object used when triggering messages to a customer.
+message SendMessageRequest {
+    // First name of the customer.
+    string first_name = 1;
+    // Last name of the customer.
+    string last_name = 2;
+    // Name of the template to use for composing the message.
+    string template_name = 3;
+}
+
+// Message object returned when triggering messages to a customer.
+message SendMessageResponse {
+    // Message sent to the customer.
+    string message = 1;
+}
+
+// Send a message to a customer.
+service Message {
+    rpc Send(SendMessageRequest) returns (SendMessageResponse) {}
+}
