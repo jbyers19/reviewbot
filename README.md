@@ -38,7 +38,7 @@ Before you start, make sure you have the following installed and configured on y
    or you can save it just for this session by running `export TELEGRAM_API_KEY="your-key-here"`
 1. Start the `reviewbot` and `reviewbot_mgr` Docker containers by running `make run`
 1. Run `curl localhost:5000/` to test that the services started successfully. You should get a `200 OK` response with `{}` as the body.
-1. When you are ready to stop the services, run `make stop`. This will kill the containers and purge all stopped containers.
+1. When you are ready to stop the services, run `make stop`. This will kill and remove the `reviewbot` and `reviewbot_mgr` containers.
 
 ### Using the services
 

@@ -34,4 +34,4 @@ clean:
 
 stop:
 	docker kill reviewbot reviewbot_mgr
-	docker container prune -f
+	docker rm reviewbot reviewbot_mgr
