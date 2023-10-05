@@ -2,13 +2,13 @@ TELEGRAM_API_KEY ?= ""
 
 run: build
 	docker run --name reviewbot -d -p 127.0.0.1:50051:50051 -e "TELEGRAM_API_KEY=$(TELEGRAM_API_KEY)" reviewbot:latest
-	docker run --name reviewbot_mgr -d -p 127.0.0.1:5000:5000 reviewbot-mgr:latest
+	docker run --name reviewbot-mgr -d -p 127.0.0.1:5000:5000 reviewbot-mgr:latest
 
 build: build-reviewbot_mgr build-reviewbot
 
 build-reviewbot_mgr:
 	pip install -r reviewbot_mgr/requirements.txt
-	cd reviewbot_mgr && docker build -t reviewbot_mgr:latest .
+	cd reviewbot_mgr && docker build -t reviewbot-mgr:latest .
 
 build-reviewbot: test
 	mkdir -p reviewbot/build
@@ -33,5 +33,5 @@ clean:
 	cd reviewbot && go mod tidy
 
 stop:
-	docker kill reviewbot reviewbot_mgr
-	docker rm reviewbot reviewbot_mgr
+	docker kill reviewbot reviewbot-mgr
+	docker rm reviewbot reviewbot-mgr
